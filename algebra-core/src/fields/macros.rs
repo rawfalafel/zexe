@@ -204,6 +204,12 @@ macro_rules! impl_Fp {
             }
 
             #[inline]
+            fn to_bytes(&self, bytes: &mut [u8]) -> bool {
+                let result = self.0.write(bytes);
+                result.is_ok()
+            }
+
+            #[inline]
             fn multiplicative_generator() -> Self {
                 $Fp::<P>(P::GENERATOR, PhantomData)
             }

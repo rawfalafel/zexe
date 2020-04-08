@@ -220,6 +220,8 @@ pub trait PrimeField:
     /// otherwise returns None.
     fn from_random_bytes(bytes: &[u8]) -> Option<Self>;
 
+    fn to_bytes(&self, bytes: &mut [u8]) -> bool;
+
     /// Returns the multiplicative generator of `char()` - 1 order.
     fn multiplicative_generator() -> Self;
 
