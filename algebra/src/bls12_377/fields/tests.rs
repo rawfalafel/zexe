@@ -24,6 +24,20 @@ use crate::{
 pub(crate) const ITERATIONS: usize = 5;
 
 #[test]
+fn test_377_fr_random_bytes() {
+    let mut bytes = [0xff; 32];
+    // `Fr` shaves 3 bits.
+    bytes[31] = 0x12;
+    let result = Fr::from_random_bytes_with_flags(&bytes);
+    // This assertion fails because the byte string evaluated to a number larger than the modulus.
+    assert!(result.is_some());
+    println!("{:?}", result);
+    let (fr, flags) = result.unwrap();
+    assert_ne!(fr, Fr::zero());
+    assert_eq!(flags, 0);
+}
+
+#[test]
 fn test_fr() {
     let mut rng = test_rng();
     for _ in 0..ITERATIONS {
